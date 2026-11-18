@@ -138,7 +138,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 };
 
 const defaultNavBarConfig: NavBarConfig = {
-	links: [LinkPresets.Home, LinkPresets.Archive, LinkPresets.About, LinkPresets.GitHub],
+	links: [LinkPresets.Home, LinkPresets.Archive, LinkPresets.Moments, LinkPresets.About, LinkPresets.GitHub],
 };
 
 import { resolveI18nText } from "@/utils/i18n-utils.ts";

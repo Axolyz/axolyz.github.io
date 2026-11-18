@@ -8,6 +8,8 @@ import { obsidianMarkdown } from "./src/publishing/obsidian-markdown.mjs";
 export default defineConfig({
   integrations: [
     shirones({
+      // Render moments with the same Obsidian compatibility as articles.
+      excludeRoutes: ["/moments"],
       // Override individual components by mirroring the theme's structure in
       // `src/components/`, or point at them explicitly:
       // components: { "atoms/blog/PostCard": "./src/components/PostCard.astro" },

@@ -1,0 +1,64 @@
+---
+import { getImage } from "astro:assets";
+import { getCollection } from "astro:content";
+import MomentSection from "@components/organisms/MomentSection.svelte";
+import I18nKey from "@i18n/i18nKey";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { resolveImageAsset } from "@utils/asset-utils";
+import { comparePublicationEntries } from "@utils/content-date";
+import { resolveI18nText } from "@utils/i18n-utils";
+import { siteMarkdownProcessor } from "@utils/markdown-processor";
+import { url } from "@utils/url-utils";
+import { momentsConfig, profileConfig } from "@/config";
+import { createObsidianProcessor, mediaUrl } from "../publishing/obsidian-markdown.mjs";
+
+if (!momentsConfig.enable) {
+  return Astro.redirect("/404/");
+}
+
+const pageTitle = resolveI18nText(momentsConfig.title, I18nKey.moments);
+const pageDescription = resolveI18nText(momentsConfig.description, I18nKey.momentsBanner);
+const entries = await getCollection("moments", ({ data }) => !import.meta.env.PROD || !data.draft);
+const renderer = await createObsidianProcessor(siteMarkdownProcessor.options).createRenderer({});
+const moments = await Promise.all(entries.sort(comparePublicationEntries).map(async (entry) => {
+  const { code } = await renderer.render(entry.body ?? "", { frontmatter: entry.data });
+  return {
+    id: entry.id,
+    published: entry.data.published.toISOString(),
+    html: code,
+    pinned: entry.data.pinned,
+    location: entry.data.location,
+    mood: entry.data.mood,
+    tags: entry.data.tags,
+    images: entry.data.images.map((image) => ({ ...image, src: mediaUrl(image.src) })),
+  };
+}));
+
+const avatarAsset = await resolveImageAsset(profileConfig.avatar ?? "");
+let avatar = typeof avatarAsset === "string" ? avatarAsset : avatarAsset.src;
+let avatarSrcset: string | undefined;
+let avatarWidth: number | undefined;
+let avatarHeight: number | undefined;
+if (typeof avatarAsset !== "string") {
+  const candidates = await Promise.all([64, 96].map(async (width) => ({
+    width,
+    image: await getImage({ src: avatarAsset, width, format: "webp", quality: 72 }),
+  })));
+  avatar = candidates[0].image.src;
+  avatarSrcset = candidates.map(({ image, width }) => `${image.src} ${width}w`).join(", ");
+  avatarWidth = avatarAsset.width;
+  avatarHeight = avatarAsset.height;
+}
+const author = {
+  name: profileConfig.name,
+  avatar,
+  avatarSrcset,
+  avatarWidth,
+  avatarHeight,
+  url: url("/about/"),
+};
+---
+
+<MainGridLayout title={pageTitle} description={pageDescription} page="moments">
+  <MomentSection {moments} {author} title={pageTitle} subtitle={pageDescription} client:visible />
+</MainGridLayout>
