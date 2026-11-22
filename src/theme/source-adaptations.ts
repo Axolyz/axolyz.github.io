@@ -17,7 +17,7 @@ const anchors: Record<string, string[]> = {
   "routes/archives/index.astro": ['new Intl.DateTimeFormat(locale,', '<Card {...data} />'],
   "routes/404.astro": ['<main', '</main>'],
   "components/Main.astro": ['const { pageTitle, pageDesc, class: className } = Astro.props;'],
-  "layouts/Layout.astro": ['Astro.currentLocale ?? site.lang', '<Font cssVariable="--font-mono" preload />'],
+  "layouts/Layout.astro": ['Astro.currentLocale ?? site.lang', '<Font cssVariable="--font-mono" preload />', 'const theme = stored ?? (prefersDark ? "dark" : "light");'],
   "routes/about.astro": ['const about = await getEntry("pages", "about");'],
 };
 function readSource(id: string) {
@@ -113,6 +113,9 @@ export function adaptThemeSource(id: string) {
   if (id === resolve(themeRoot, "layouts/Layout.astro")) {
     return readSource(id)
       .replaceAll("Astro.currentLocale ?? site.lang", "Astro.locals.contentLanguage ?? Astro.currentLocale ?? site.lang")
+      // Legacy Shirone visitors may have stored "auto". Resolve it to the OS
+      // preference before the native theme script and first paint.
+      .replace('const theme = stored ?? (prefersDark ? "dark" : "light");', 'const theme = stored === "light" || stored === "dark" ? stored : (prefersDark ? "dark" : "light");')
       .replace('<Font cssVariable="--font-mono" preload />', "");
   }
   if (id === resolve(themeRoot, "routes/about.astro")) {
