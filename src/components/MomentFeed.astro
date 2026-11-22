@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import { formatDate } from "../lib/content";
+interface Props { moments: CollectionEntry<"moments">[] }
+const { moments } = Astro.props;
+const rendered = await Promise.all(moments.map(async (moment) => ({ moment, ...await render(moment) })));
+---
+<div class="moment-feed">
+  {rendered.map(({ moment, Content }) => <article class="moment-entry" id={"moment-" + moment.id}>
+    <header class="moment-meta">
+      <a href={"/moments/#moment-" + encodeURIComponent(moment.id)}><time datetime={moment.data.pubDatetime.toISOString()}>{formatDate(moment.data.pubDatetime, true)}</time></a>
+      {moment.data.pinned && <span class="moment-pinned">Pinned</span>}
+    </header>
+    <div class="moment-content app-prose"><Content /></div>
+    {(moment.data.location || moment.data.tags.length > 0) && <footer class="moment-info">
+      {moment.data.location && <span>{moment.data.location}</span>}
+      {moment.data.tags.map((tag) => <span>#{tag}</span>)}
+    </footer>}
+  </article>)}
+</div>
+
+<style>
+  .moment-entry { padding-block: 1.5rem; border-bottom: 1px solid var(--border); scroll-margin-top: 2rem; }
+  .moment-meta { display: flex; gap: 1rem; margin-bottom: 0.75rem; color: var(--fg-muted); font-family: var(--font-ui); font-size: 0.9rem; }
+  .moment-pinned { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.2em; }
+  .moment-content > :global(:first-child) { margin-top: 0; }
+  .moment-content > :global(:last-child) { margin-bottom: 0; }
+  .moment-info { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; color: var(--fg-muted); font-size: 0.9rem; }
+</style>

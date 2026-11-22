@@ -1,0 +1,8 @@
+{
+  "sources": [
+    {"name":"AstroSage","repository":"chintak/astro-sage","branch":"main","commit":"2b8953188797707a3c6e1e4ac9a6e587134764c7","package":"astro-sage","version":"0.2.1","role":"runtime"},
+    {"name":"Interleaf","repository":"DRAG0NM/astro-theme-interleaf","branch":"main","commit":"13d8ef338fb8114e8bc93cd14f328cc47f3e2a71","role":"visual-reference"},
+    {"name":"Sumi","repository":"kpab/astro-sumi","branch":"main","commit":"c6bbdd91417cb0a624e7abbb570544c951ac5c6f","role":"visual-reference"},
+    {"name":"AstroPaper","repository":"satnaing/astro-paper","branch":"main","commit":"368e4e1f865566fcef96f76a1f600f9915183d3f","role":"lineage-reference"}
+  ]
+}

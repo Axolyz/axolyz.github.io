@@ -1,0 +1,77 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+  position?: string;
+  width?: number;
+  height?: number;
+  variant: "home" | "post" | "page";
+}
+const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant } = Astro.props;
+---
+{src ? (
+  <section class:list={["cover-hero", `cover-hero--${variant}`]} style={{ "--cover-position": position }}>
+    <img class="cover-hero__image" src={src} alt={alt} {width} {height} fetchpriority="high" decoding="async" />
+    <div class="cover-hero__shade" aria-hidden="true"></div>
+    {Astro.slots.has("default") && <div class="cover-hero__content"><slot /></div>}
+  </section>
+) : <slot />}
+
+<style>
+  .cover-hero {
+    --cover-shade-top: 0.34;
+    --cover-shade-middle: 0.22;
+    --cover-shade-bottom: 0.18;
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    width: 100cqw;
+    margin-inline: calc((100% - 100cqw) / 2);
+    overflow: hidden;
+    color: #fffdf9;
+    background: #343a34;
+    min-height: 20rem;
+    height: min(50svh, 35rem);
+  }
+  :global([data-theme="dark"]) .cover-hero {
+    --cover-shade-top: 0.56;
+    --cover-shade-middle: 0.54;
+    --cover-shade-bottom: 0.5;
+  }
+  .cover-hero__image,
+  .cover-hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+  .cover-hero__image { object-fit: cover; object-position: var(--cover-position); }
+  .cover-hero__shade {
+    background: linear-gradient(180deg, rgb(0 0 0 / var(--cover-shade-top)), rgb(0 0 0 / var(--cover-shade-middle)) 38%, rgb(0 0 0 / var(--cover-shade-bottom)));
+  }
+  .cover-hero__content {
+    width: min(100%, 54rem);
+    padding: 4.6667rem max(1.5rem, var(--gutter)) 3rem;
+    text-align: center;
+    text-shadow: 0 1px 5px rgb(0 0 0 / 0.5);
+  }
+  .cover-hero :global(h1) {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(2.75rem, 5vw, 4.6rem);
+    font-weight: 500;
+    line-height: 1.25;
+    text-wrap: balance;
+    letter-spacing: 0.025em;
+    text-shadow: 0 2px 8px rgb(0 0 0 / 0.6);
+  }
+  .cover-hero :global(.intro) {
+    margin-top: 1.25rem;
+    color: rgb(255 253 249 / 0.94);
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+    line-height: 1.7;
+    font-style: normal;
+  }
+  .cover-hero :global(a) { color: rgb(255 253 249 / 0.9); }
+  .cover-hero :global(.mt-6 .flex) { justify-content: center; }
+  @media (max-width: 40rem) {
+    .cover-hero { min-height: 20.8333rem; height: 51.6667svh; }
+    .cover-hero__content { padding-top: 5.3333rem; padding-bottom: 3.3333rem; }
+  }
+</style>

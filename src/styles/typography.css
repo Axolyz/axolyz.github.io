@@ -1,0 +1,19 @@
+/* Latin first, Chinese shapes first for shared CJK characters, Japanese for gaps.
+   This same chain applies to reading elements without language markup. */
+:root:root {
+  --font-cjk: "Blog Tsuku SC", "Blog Tsuku JP", "Noto Serif SC Variable", "Songti SC", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: var(--font-serif), var(--font-cjk);
+  --font-heading: var(--font-body);
+  --font-code: "Blog Maple Mono", "Maple Mono", "SFMono-Regular", Consolas, var(--font-cjk), monospace;
+  --font-ui: var(--font-code);
+}
+
+/* Keep the wordmark in Tsukushi independently of the UI font. */
+body > header .site-title {
+  font-family: var(--font-cjk);
+}
+
+/* Font families only: title sizing, weight and rhythm remain upstream. */
+h1, h2, h3, h4, .heading-font, .card-title {
+  font-synthesis: none;
+}

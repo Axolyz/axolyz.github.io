@@ -1,4 +1,4 @@
-name: Deploy Shirone to GitHub Pages
+name: Deploy blog to GitHub Pages
 
 on:
   push:
@@ -22,6 +22,7 @@ jobs:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm test
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v4
         with:

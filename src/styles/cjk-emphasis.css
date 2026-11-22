@@ -1,0 +1,3 @@
+/* Font-face mappings come from theme/cjk-emphasis.ts. Keep unsupported glyphs
+   upright; real Newsreader/Maple italics are unaffected. */
+:root { font-synthesis-style: none; }

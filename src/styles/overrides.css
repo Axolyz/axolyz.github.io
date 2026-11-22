@@ -1,0 +1,96 @@
+/* Sumi palette and interaction tokens; layouts remain AstroSage. */
+:root:root,
+:root[data-theme="light"] {
+  --bg: #faf8f5;
+  --bg-subtle: #f3f0ea;
+  --bg-raised: #ffffff;
+  --fg: #1a1a1a;
+  --fg-muted: #5a5854;
+  --fg-faint: rgb(26 26 26 / 0.62);
+  --accent: #c73e3a;
+  --accent-fg: #faf8f5;
+  --border: rgb(26 26 26 / 0.14);
+  --border-strong: rgb(26 26 26 / 0.28);
+  --selection: var(--accent);
+  --sage: var(--fg-muted);
+  --mark: color-mix(in srgb, var(--accent) 15%, var(--bg));
+  --interaction-duration: 140ms;
+  --interaction-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+:root[data-theme="dark"] {
+  --bg: #0b0c0e;
+  --bg-subtle: #101114;
+  --bg-raised: #14161a;
+  --fg: #e9e7e1;
+  --fg-muted: rgb(233 231 225 / 0.62);
+  --fg-faint: rgb(233 231 225 / 0.55);
+  --accent: #c85a52;
+  --accent-fg: #0b0c0e;
+  --border: rgb(233 231 225 / 0.14);
+  --border-strong: rgb(233 231 225 / 0.28);
+}
+
+details.callout > summary {
+  cursor: pointer;
+  display: list-item;
+  list-style-position: inside;
+}
+details.callout > .callout-body { margin-top: 0.75rem; }
+
+a {
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+a, .card-title, .post-card, .tag, .icon-btn,
+.post-footer > div[data-pagefind-ignore] > a {
+  transition: color var(--interaction-duration) var(--interaction-ease),
+    text-decoration-color var(--interaction-duration) var(--interaction-ease),
+    border-color var(--interaction-duration) var(--interaction-ease),
+    background-color var(--interaction-duration) var(--interaction-ease);
+}
+a:hover { color: var(--accent); text-decoration-color: currentColor; }
+.active-nav { color: inherit; text-decoration-color: var(--accent); }
+::selection { background: var(--selection); color: var(--accent-fg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Ink carries the words; vermilion marks the interaction and the paper. */
+#main-content a:not(:hover),
+#main-content .text-accent,
+#main-content .draft-badge {
+  color: inherit;
+}
+#main-content a:hover { color: var(--accent); }
+#main-content .toc a:not(:hover) { color: var(--fg-muted); }
+#main-content .draft-badge { border-color: var(--accent); }
+.app-prose a {
+  text-decoration-line: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.app-prose blockquote:not(.callout) {
+  color: var(--fg-muted);
+  border-inline-start-color: var(--accent);
+}
+.app-prose :not(pre) > code,
+.app-prose pre { background-color: var(--bg-subtle); }
+.app-prose :is(img, picture, figure:has(img)) { border-radius: 0; }
+.post-card:hover { background-color: var(--bg-subtle); }
+.post-card:hover .card-title { color: var(--accent); }
+#main-content .post-footer > div[data-pagefind-ignore] > a:hover {
+  color: inherit;
+  background-color: var(--bg-subtle);
+  opacity: 1;
+}
+#main-content .post-footer a:hover .text-accent { color: var(--accent); }
+#main-content #pagefind-search {
+  --pagefind-ui-text: var(--fg);
+  --pagefind-ui-background: var(--bg);
+  --pagefind-ui-primary: var(--fg);
+  --pagefind-ui-image-border-radius: 0;
+}
+#main-content .pagefind-ui__result-link:hover { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) {
+  :root:root { --interaction-duration: 0ms; }
+}

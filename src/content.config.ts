@@ -1,33 +1,30 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { postSchema, momentSchema, specSchema, seriesSchema } from "shirones/collections";
+import { z } from "astro/zod";
+import { defineSageCollections } from "astro-sage/content";
 
-/**
- * Shirone content collections — inline schemas for full type safety and Astro
- * typegen support (a schema hidden behind a helper call cannot be
- * introspected). Edit the `base` paths if you moved the content directory;
- * the schemas themselves come from the theme.
- *
- * Generated from the theme's `src/integration/collections.manifest.json`.
- */
+const sage = defineSageCollections({ author: "Axolyz" });
+
 const posts = defineCollection({
-	loader: glob({ base: "./shirones/content/posts", pattern: "**/*.{md,mdx}" }),
-	schema: postSchema,
+  ...sage.posts,
+  schema: (context) => {
+    const inherited = typeof sage.posts.schema === "function" ? sage.posts.schema(context) : sage.posts.schema!;
+    return inherited.extend({
+      pubDatetime: z.coerce.date(),
+      description: z.string().nullish().transform(value => value ?? ""),
+      tags: z.array(z.string()).nullish().transform(value => value ?? []),
+    });
+  },
 });
 
 const moments = defineCollection({
-	loader: glob({ base: "./shirones/content/moments", pattern: "**/*.md" }),
-	schema: momentSchema,
+  loader: glob({ base: "./src/content/moments", pattern: "**/*.md" }),
+  schema: z.object({
+    pubDatetime: z.coerce.date(),
+    draft: z.boolean().default(false),
+    pinned: z.boolean().default(false),
+    tags: z.array(z.string()).nullish().transform(value => value ?? []),
+    location: z.string().nullish().transform(value => value ?? ""),
+  }),
 });
-
-const spec = defineCollection({
-	loader: glob({ base: "./shirones/content/spec", pattern: "**/*.{md,mdx}" }),
-	schema: specSchema,
-});
-
-const series = defineCollection({
-	loader: glob({ base: "./shirones/content/series", pattern: "**/*.md" }),
-	schema: seriesSchema,
-});
-
-export const collections = { posts, moments, spec, series } as const;
+export const collections = { ...sage, posts, moments };

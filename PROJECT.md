@@ -1,16 +1,18 @@
 ---
 type: static-blog
-summary: Axolyz 的个人博客，从 Obsidian 选发文章与动态，由 Shirone 构建并部署到 GitHub Pages。
+summary: 東雲暁月的个人博客，从 Obsidian 一键发布文章与动态，以 AstroSage 和 GitHub Pages 构建托管。
 tags:
   - blog
   - obsidian
   - astro
 ---
 
-# Axolyz 的博客
+# 東雲暁月
 
-- [站点](https://axolyz.github.io/)由 [GitHub Actions](https://github.com/Axolyz/axolyz.github.io/actions) 从 `main` 构建。
-- 文章原稿在本机 Obsidian 的 `Writing/Blog/`。Enveloppe 将选中的文章复制到 `shirones/content/posts/`，将配图复制到 `public/blog-media/`。
-- 动态原稿在 `Writing/Moments/`，发布到 `shirones/content/moments/`。Obsidian 的 **⌘⌥M** 新建动态，**⌘⌥P** 发布当前文章或动态。快捷键和目录映射保存在本机 Obsidian 插件设置中。
-- 本地开发入口是 `pnpm dev`，生产构建使用 `pnpm build`。Node 和 pnpm 版本见 `.node-version` 和 `package.json`。
-- 站点配置在 `shirones/config/`。新增组件和布局可以放在 `src/`，主题覆盖方式见 README。
+工程长期位于 `~/Documents/Workspaces/personal-blog`，线上入口为 https://axolyz.github.io/ ，仓库为 `Axolyz/axolyz.github.io`。从 `main` 由 GitHub Actions 测试、构建并部署 Pages。无需本机参与构建。
+
+写作原稿在 Obsidian Vault 的 `Writing/Blog/` 和 `Writing/Moments/`，通过 Enveloppe 发布到 `src/content/posts/`、`src/content/moments/`，图片在 `public/blog-media/`。快捷键 ⌘⌥B / ⌘⌥M 新建、⌘⌥P 发布。模板和完整说明只维护在 Vault/Writing，统一日期为 `pubDatetime`。
+
+主题为固定 npm 版本 AstroSage 0.2.1；保留原生文章头、正文、目录及路由，通过集中源码适配添加固定头图、首图预览、动态和少量外观调整。配色交互参考 Sumi。英文阅读用 Newsreader、中日阅读与站名用普通筑紫明朝、UI 和代码用 Maple Mono，中文斜体用正体霞鹜文楷。用户于 2026-11-22 确认网页字体授权，网页分片随工程版本控制，原始桌面字库不入库。
+
+维护入口为 README.md、sage.config.ts 和 src/theme/source-adaptations.ts。运行 `pnpm dev` 开发，`pnpm test` / `pnpm build` 验证，`pnpm theme:check` 检查上游。布局测试文章已移除，About 按用户要求保留主题默认内容。
