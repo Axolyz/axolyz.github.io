@@ -28,5 +28,7 @@ export default defineSageConfig({
   posts: { perPage: 12, perIndex: 8, scheduledPostMargin: 0 },
   comments: { provider: false },
   citation: { enabled: false },
+  // Keep native sharing and Copy link; omit platform-specific buttons.
+  shareLinks: [],
   socials: [{ name: "github", url: "https://github.com/Axolyz" }],
 });
