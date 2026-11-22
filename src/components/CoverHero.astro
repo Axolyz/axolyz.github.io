@@ -26,6 +26,7 @@ const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant
     isolation: isolate;
     view-transition-name: site-cover;
     display: grid;
+    grid-template-rows: var(--site-header-height) minmax(0, 1fr);
     place-items: center;
     width: 100cqw;
     margin-inline: calc((100% - 100cqw) / 2);
@@ -47,8 +48,9 @@ const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant
     background: linear-gradient(180deg, rgb(0 0 0 / var(--cover-shade-top)), rgb(0 0 0 / var(--cover-shade-middle)) 38%, rgb(0 0 0 / var(--cover-shade-bottom)));
   }
   .cover-hero__content {
+    grid-row: 2;
     width: min(100%, 54rem);
-    padding: 4.6667rem max(1.5rem, var(--gutter)) 3rem;
+    padding: 1.5rem max(1.5rem, var(--gutter));
     text-align: center;
     text-shadow: 0 1px 5px rgb(0 0 0 / 0.5);
   }
@@ -80,6 +82,5 @@ const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant
   }
   @media (max-width: 40rem) {
     .cover-hero { min-height: 20.8333rem; height: 51.6667svh; }
-    .cover-hero__content { padding-top: 5.3333rem; padding-bottom: 3.3333rem; }
   }
 </style>

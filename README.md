@@ -19,7 +19,7 @@
 - `sage.config.ts`：站点身份、功能、主题选项。
 - `src/theme/integration.ts`：构建生命周期与 Markdown 衔接。
 - `src/theme/source-adaptations.ts`：集中维护对 npm 主题源码的小幅适配，升级不匹配时明确报错。文章头、网格、目录和正文排版继续使用 AstroSage 原版。
-- `src/theme/visuals.ts`、`src/components/CoverHero.astro`：固定通栏头图、统一尺寸与焦点。首页及导航页标题叠图；文章标题和元信息在图下。
+- `src/theme/visuals.ts`、`src/components/CoverHero.astro`：固定通栏头图、统一尺寸与焦点。首页及导航页标题叠图，标题组在导航分隔线与图片底边之间居中；文章标题和元信息在图下。
 - `src/styles/overrides.css`：Sumi 参考配色与交互；`covers.css`：头图、月牙、斜切预览与列表宽度；`typography.css`：字体分工。
 - `src/publishing/obsidian-markdown.mjs`：Enveloppe 链接、图片、折叠 Callout 与首图元数据。
 - `src/content/`：发布副本及默认 About；`public/`：站点图片与公开附件。

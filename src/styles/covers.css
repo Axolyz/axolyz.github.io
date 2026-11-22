@@ -1,4 +1,12 @@
 /* A cover sits behind the original navigation, across the viewport. */
+:root {
+  --site-header-padding: 1.5rem;
+  --site-header-control-size: 2.25rem;
+  --site-header-height: calc(2 * var(--site-header-padding) + var(--site-header-control-size) + 1px);
+}
+@media (width < 40rem) {
+  :root { --site-header-padding: 1.25rem; }
+}
 body:has(.cover-hero) > header {
   position: absolute;
   inset: 0 0 auto;
@@ -6,7 +14,14 @@ body:has(.cover-hero) > header {
   color: #fffdf9;
   text-shadow: 0 1px 4px rgb(0 0 0 / 0.5);
 }
-body:has(.cover-hero) > header > div { border-bottom-color: rgb(255 253 249 / 0.28); }
+body:has(.cover-hero) > header > div {
+  padding-block: var(--site-header-padding);
+  border-bottom-color: rgb(255 253 249 / 0.28);
+}
+body:has(.cover-hero) > header .icon-btn {
+  width: var(--site-header-control-size);
+  height: var(--site-header-control-size);
+}
 body:has(.cover-hero) > header :is(.nav-link, .icon-btn) { color: rgb(255 253 249 / 0.88); }
 body:has(.cover-hero) > header :is(.nav-link, .icon-btn):hover { color: #fffdf9; }
 body:has(.cover-hero) > header .site-title:hover { color: inherit; }
