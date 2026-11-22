@@ -17,7 +17,7 @@ const anchors: Record<string, string[]> = {
   "routes/archives/index.astro": ['new Intl.DateTimeFormat(locale,', '<Card {...data} />'],
   "routes/404.astro": ['<main', '</main>'],
   "components/Main.astro": ['const { pageTitle, pageDesc, class: className } = Astro.props;'],
-  "layouts/Layout.astro": ['Astro.currentLocale ?? site.lang', '<Font cssVariable="--font-mono" preload />', 'const theme = stored ?? (prefersDark ? "dark" : "light");'],
+  "layouts/Layout.astro": ['Astro.currentLocale ?? site.lang', '<Font cssVariable="--font-mono" preload />', 'const theme = stored ?? (prefersDark ? "dark" : "light");', '<meta name="viewport" content="width=device-width, initial-scale=1" />'],
   "routes/about.astro": ['const about = await getEntry("pages", "about");'],
 };
 function readSource(id: string) {
@@ -112,6 +112,8 @@ export function adaptThemeSource(id: string) {
   }
   if (id === resolve(themeRoot, "layouts/Layout.astro")) {
     return readSource(id)
+      .replace("---\n", `---\nimport { homeCover } from ${JSON.stringify(resolve(projectRoot, "src/theme/visuals.ts"))};\n`)
+      .replace('<meta name="viewport" content="width=device-width, initial-scale=1" />', '<meta name="viewport" content="width=device-width, initial-scale=1" />\n    <link rel="preload" as="image" href={homeCover.src} fetchpriority="high" />')
       .replaceAll("Astro.currentLocale ?? site.lang", "Astro.locals.contentLanguage ?? Astro.currentLocale ?? site.lang")
       // Legacy Shirone visitors may have stored "auto". Resolve it to the OS
       // preference before the native theme script and first paint.

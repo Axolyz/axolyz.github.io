@@ -11,7 +11,7 @@ const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant
 ---
 {src ? (
   <section class:list={["cover-hero", `cover-hero--${variant}`]} style={{ "--cover-position": position }}>
-    <img class="cover-hero__image" src={src} alt={alt} {width} {height} fetchpriority="high" decoding="async" />
+    <img class="cover-hero__image" src={src} alt={alt} {width} {height} fetchpriority="high" decoding="sync" />
     <div class="cover-hero__shade" aria-hidden="true"></div>
     {Astro.slots.has("default") && <div class="cover-hero__content"><slot /></div>}
   </section>
@@ -24,6 +24,7 @@ const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant
     --cover-shade-bottom: 0.18;
     position: relative;
     isolation: isolate;
+    view-transition-name: site-cover;
     display: grid;
     place-items: center;
     width: 100cqw;
@@ -70,6 +71,13 @@ const { src, alt = "", position = "50% 50%", width = 1600, height = 900, variant
   }
   .cover-hero :global(a) { color: rgb(255 253 249 / 0.9); }
   .cover-hero :global(.mt-6 .flex) { justify-content: center; }
+  /* The fixed cover must not fade through its dark backing on navigation.
+     Capture the complete hero (image, shade and title) as one matched layer. */
+  :global(::view-transition-old(site-cover)),
+  :global(::view-transition-new(site-cover)) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
   @media (max-width: 40rem) {
     .cover-hero { min-height: 20.8333rem; height: 51.6667svh; }
     .cover-hero__content { padding-top: 5.3333rem; padding-bottom: 3.3333rem; }

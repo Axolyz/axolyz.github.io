@@ -12,7 +12,7 @@
 
 模板和完整操作说明只维护在 Vault 的 `Writing/Blog Post Template.md`、`Writing/Moment Template.md` 和 `Writing/Publishing.md`。两种内容统一使用带时区的 `pubDatetime`；`draft: true` 和未来日期不会发布。文章还需 `title`，可选 `description`、`tags`、`series`；动态可选 `tags`、`location`、`pinned`。
 
-直接在正文粘贴图片即可，列表自动读取正文第一张图作为预览，不需要 `cover` 或 `image` 字段。正文保留原图比例，列表生成响应式 WebP；Archives 保留纯文字。图片代码示例不参与首图提取。全站固定头图单独设置，文章首图不会替换它。
+直接在正文粘贴图片即可，列表自动读取正文第一张图作为预览，不需要 `cover` 或 `image` 字段。正文保留原图比例，列表生成响应式 WebP；Archives 保留纯文字。图片代码示例不参与首图提取。全站固定头图单独设置，文章首图不会替换它。头图在 head 预加载、同步解码，并作为独立的原生页面过渡层保持显示，避免切页时露出深色底。
 
 ## 维护入口
 
