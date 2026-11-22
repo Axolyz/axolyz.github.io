@@ -1,12 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { satteri } from "@astrojs/markdown-satteri";
-import { normalizeMediaUrl, obsidianPlugin } from "../src/publishing/obsidian-markdown.mjs";
-
-test("Enveloppe cover properties resolve to public media URLs", () => {
-  assert.equal(normalizeMediaUrl("[photo.webp](/public/blog-media/photo.webp)"), "/blog-media/photo.webp");
-  assert.equal(normalizeMediaUrl("/blog-media/photo.webp"), "/blog-media/photo.webp");
-});
+import { obsidianPlugin } from "../src/publishing/obsidian-markdown.mjs";
 
 test("Sätteri applies URL mutations and preserves foldable Obsidian callouts", async () => {
   const renderer = await satteri({ mdastPlugins: [obsidianPlugin] }).createRenderer({});

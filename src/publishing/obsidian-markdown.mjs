@@ -1,9 +1,7 @@
 import { slug } from "github-slugger";
 
-export function normalizeMediaUrl(value) {
-  const link = value.match(/^\[[\s\S]*\]\(([\s\S]+)\)$/);
-  const url = link ? link[1] : value;
-  return url.replace(/^\/?(?:\.\.\/|\.\/)*public\/blog-media\//, "/blog-media/");
+function normalizeMediaUrl(value) {
+  return value.replace(/^\/?(?:\.\.\/|\.\/)*public\/blog-media\//, "/blog-media/");
 }
 
 function decode(value) {

@@ -115,8 +115,8 @@ export function adaptThemeSource(id: string) {
       .replace("---\n", `---\nimport { homeCover } from ${JSON.stringify(resolve(projectRoot, "src/theme/visuals.ts"))};\n`)
       .replace('<meta name="viewport" content="width=device-width, initial-scale=1" />', '<meta name="viewport" content="width=device-width, initial-scale=1" />\n    <link rel="preload" as="image" href={homeCover.src} fetchpriority="high" />')
       .replaceAll("Astro.currentLocale ?? site.lang", "Astro.locals.contentLanguage ?? Astro.currentLocale ?? site.lang")
-      // Legacy Shirone visitors may have stored "auto". Resolve it to the OS
-      // preference before the native theme script and first paint.
+      // Accept supported stored values; otherwise use the OS preference
+      // before the native theme script and first paint.
       .replace('const theme = stored ?? (prefersDark ? "dark" : "light");', 'const theme = stored === "light" || stored === "dark" ? stored : (prefersDark ? "dark" : "light");')
       .replace('<Font cssVariable="--font-mono" preload />', "");
   }
