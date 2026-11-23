@@ -2,7 +2,7 @@ import sharp from "sharp";
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-const source = fileURLToPath(new URL("../src/assets/brand/doll.png", import.meta.url));
+const source = fileURLToPath(new URL("../src/assets/brand/favicon-portrait.png", import.meta.url));
 const sizes = [16, 32, 48, 64, 128, 256];
 const images = await Promise.all(sizes.map(size => sharp(source).resize(size, size, { fit: "contain", background: "#00000000" }).png().toBuffer()));
 // ICO supports PNG-encoded entries, preserving transparency at every size.
