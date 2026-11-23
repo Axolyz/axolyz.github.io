@@ -18,3 +18,5 @@ CJK emphasis uses upright [LXGW WenKai](https://github.com/lxgw/LxgwWenKai), SIL
 The default social-preview image was generated for this site and is stored as `public/og-default.webp`.
 
 The fixed site banner `public/site-cover.png` is the user's supplied `99012779_p0.png`, copied without modification. Its creator and original publication are not identified in this repository; the visible signature remains in the original asset. It is separate from the generated default social-preview image and article body images.
+
+The browser favicon is derived from the small upper-right doll in the user-supplied illustration (`src/assets/brand/reference.jpeg`). Its transparent cutout (`src/assets/brand/doll.png`) was prepared with image editing; the original illustration and the cutout are retained for maintenance. This artwork is separate from the site cover and social preview image.

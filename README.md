@@ -61,3 +61,5 @@ pnpm theme:check
 ```
 
 `theme-sources.json` 记录 AstroSage、Interleaf、Sumi 和 AstroPaper 的参考版本。AstroSage 是运行依赖，另三者是设计或沿革参考，不合并它们的整站代码。更新主题后检查源码适配、首页/文章/动态/搜索、明暗模式与移动端，再更新记录版本。源码适配只触及导航、头图、列表宽度、日期图标、字体加载与元信息，不覆盖文章排版。
+
+浏览器图标使用原图右上角人偶的透明抠图。原图和抠图保存在 `src/assets/brand/`；运行 `node scripts/prepare-icons.mjs` 生成多尺寸 `public/favicon.ico`、512px PNG 和 Apple touch icon。主题自动识别这些文件，无需修改上游布局。
