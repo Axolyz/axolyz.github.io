@@ -62,4 +62,4 @@ pnpm theme:check
 
 `theme-sources.json` 记录 AstroSage、Interleaf、Sumi 和 AstroPaper 的参考版本。AstroSage 是运行依赖，另三者是设计或沿革参考，不合并它们的整站代码。更新主题后检查源码适配、首页/文章/动态/搜索、明暗模式与移动端，再更新记录版本。源码适配只触及导航、头图、列表宽度、日期图标、字体加载与元信息，不覆盖文章排版。
 
-浏览器图标使用新图左上角的紫裙人偶透明抠图。原图为 `src/assets/brand/favicon-reference.jpg`，当前图标源为 `favicon-doll.png`。`node scripts/prepare-icons.mjs` 裁紧透明边界，等比放大至 Y 轴完全顶满，上下无留白、左右自然留白，不拉伸或裁掉人物；随后生成多尺寸 ICO、32px／512px PNG 与 Apple touch icon。页面引用带内容版本号的 32px PNG，ICO 仅作默认路径回退。
+浏览器图标使用 `ちゃこ式·姿态一`：直接从用户提供的 `ちゃこ式アリスver1.5.psd` 中导出 `アリス / 後` 图层组的默认身体和表情，未生图重绘。当前图标源为 `src/assets/brand/favicon-doll.png`，构建不依赖 PSD 或额外渲染软件。`node scripts/prepare-icons.mjs` 裁紧透明边界，等比放大至 Y 轴完全顶满，上下无留白、左右自然留白，不拉伸或裁掉人物；随后生成多尺寸 ICO、32px／512px PNG 与 Apple touch icon。页面引用带内容版本号的 32px PNG，ICO 仅作默认路径回退。
