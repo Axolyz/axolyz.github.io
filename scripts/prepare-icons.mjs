@@ -2,8 +2,20 @@ import sharp from "sharp";
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-// Approved transparent edit of the original full-doll cutout: complete apron, no legs.
-const source = fileURLToPath(new URL("../src/assets/brand/favicon-doll.png", import.meta.url));
+// Remove transparent margins, then scale proportionally to fill the vertical axis.
+const input = fileURLToPath(new URL("../src/assets/brand/favicon-doll.png", import.meta.url));
+const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+let left = info.width, top = info.height, right = -1, bottom = -1;
+for (let y = 0; y < info.height; y++) for (let x = 0; x < info.width; x++) {
+  if (data[(y * info.width + x) * 4 + 3] >= 16) {
+    left = Math.min(left, x); right = Math.max(right, x);
+    top = Math.min(top, y); bottom = Math.max(bottom, y);
+  }
+}
+if (right < left || bottom < top) throw new Error("The favicon source is empty");
+if (right - left > bottom - top) throw new Error("Use a portrait-shaped source to fill the height without cropping");
+const source = await sharp(input).extract({ left, top, width: right - left + 1, height: bottom - top + 1 })
+  .resize(512, 512, { fit: "contain", background: "#00000000" }).png().toBuffer();
 const sizes = [16, 32, 48, 64, 128, 256];
 const images = await Promise.all(sizes.map(size => sharp(source).resize(size, size, { fit: "contain", background: "#00000000" }).png().toBuffer()));
 // ICO supports PNG-encoded entries, preserving transparency at every size.
