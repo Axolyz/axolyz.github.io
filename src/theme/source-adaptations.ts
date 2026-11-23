@@ -1,6 +1,7 @@
 import { dirname, resolve, relative } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import { searchUI } from "./search-ui";
 import { cjkEmphasisFaces } from "./cjk-emphasis";
 
@@ -111,7 +112,9 @@ export function adaptThemeSource(id: string) {
       .replace(heading, "");
   }
   if (id === resolve(themeRoot, "layouts/Layout.astro")) {
+    const iconVersion = createHash("sha256").update(readFileSync(resolve(projectRoot, "public/favicon-32.png"))).digest("hex").slice(0, 12);
     return readSource(id)
+      .replace('<link rel="icon" href={getAssetPath("favicon.ico")} sizes="any" />', `<link rel="icon" type="image/png" href={getAssetPath("favicon-32.png") + "?v=${iconVersion}"} sizes="32x32" />`)
       .replace("---\n", `---\nimport { homeCover } from ${JSON.stringify(resolve(projectRoot, "src/theme/visuals.ts"))};\n`)
       .replace('<meta name="viewport" content="width=device-width, initial-scale=1" />', '<meta name="viewport" content="width=device-width, initial-scale=1" />\n    <link rel="preload" as="image" href={homeCover.src} fetchpriority="high" />')
       .replaceAll("Astro.currentLocale ?? site.lang", "Astro.locals.contentLanguage ?? Astro.currentLocale ?? site.lang")

@@ -14,6 +14,7 @@ const pages = built.filter(path => path.endsWith(".html"));
 const references = new Set();
 for (const path of pages) {
   const html = readFileSync(path, "utf8");
+  assert.match(html, /<link\b[^>]*rel="icon"[^>]*type="image\/png"[^>]*href="\/favicon-32\.png\?v=[a-f0-9]+"[^>]*sizes="32x32"/, `${path}: explicit, versioned PNG favicon`);
   assert.equal((html.match(/<section\b[^>]*class="cover-hero\b/g) ?? []).length, 1, `${relative(root, path)}: one site cover`);
   assert.match(html, /<link\b[^>]*rel="preload"[^>]*as="image"/, `${path}: preload the shared cover before painting`);
   assert.match(html, /<img\b[^>]*class="cover-hero__image"[^>]*decoding="sync"/, `${path}: do not paint the cover's backing before decoding`);

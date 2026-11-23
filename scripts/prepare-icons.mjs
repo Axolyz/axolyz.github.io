@@ -20,6 +20,7 @@ for (let i = 0; i < sizes.length; i++) {
   offset += images[i].length;
 }
 await writeFile(new URL("../public/favicon.ico", import.meta.url), Buffer.concat([header, ...images]));
+await sharp(source).resize(32, 32).png().toFile(new URL("../public/favicon-32.png", import.meta.url).pathname);
 await sharp(source).resize(512, 512).png().toFile(new URL("../public/favicon.png", import.meta.url).pathname);
 await sharp(source).resize(180, 180).png().toFile(new URL("../public/apple-touch-icon.png", import.meta.url).pathname);
 console.log("Prepared transparent favicon.ico (16–256px), favicon.png and apple-touch-icon.png.");
