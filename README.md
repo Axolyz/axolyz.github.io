@@ -62,4 +62,4 @@ pnpm theme:check
 
 `theme-sources.json` 记录 AstroSage、Interleaf、Sumi 和 AstroPaper 的参考版本。AstroSage 是运行依赖，另三者是设计或沿革参考，不合并它们的整站代码。更新主题后检查源码适配、首页/文章/动态/搜索、明暗模式与移动端，再更新记录版本。源码适配只触及导航、头图、列表宽度、日期图标、字体加载与元信息，不覆盖文章排版。
 
-浏览器图标直接从用户原图右上角的人偶裁切，保留蝴蝶结、完整头部、双手、上半身和围裙，裁掉小腿；不使用生图或重绘。原图与完整透明抠图在 `src/assets/brand/`。`node scripts/prepare-icons.mjs` 使用 Sharp 和边界连通背景算法去除外部白底、保留衣领和围裙的内部白色，排除左侧大人物碎片，再生成多尺寸 ICO、32px／512px PNG 与 Apple touch icon。页面引用带内容版本号的 32px PNG，ICO 仅作默认路径回退。
+浏览器图标以最初的完整透明人偶抠图为基础，用图像编辑保留完整蝴蝶结、头发、双手、围裙和裙摆，仅移除腿脚。原图、完整抠图 `doll.png` 和当前图标源 `favicon-doll.png` 均位于 `src/assets/brand/`。`node scripts/prepare-icons.mjs` 生成多尺寸 ICO、32px／512px PNG 与 Apple touch icon。页面引用带内容版本号的 32px PNG，ICO 仅作默认路径回退。
