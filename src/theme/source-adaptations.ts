@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { searchUI } from "./search-ui";
 import { cjkEmphasisFaces } from "./cjk-emphasis";
+import { showBrandMoon } from "./visuals";
 
 const projectRoot = fileURLToPath(new URL("../../", import.meta.url));
 const themeRoot = dirname(fileURLToPath(import.meta.resolve("astro-sage")));
@@ -81,7 +82,7 @@ export function adaptThemeSource(id: string) {
   if (id === resolve(themeRoot, "components/Header.astro")) {
     return readSource(id)
       .replace('{ path: "/posts", label: t.nav.posts },', '{ path: "/posts", label: t.nav.posts },\n  { path: "/moments", label: "Moments" },')
-      .replace('<header class="app-layout">', '<header class="app-layout" lang="en">');
+      .replace('<header class="app-layout">', `<header class="app-layout" lang="en"${showBrandMoon ? ' data-brand-moon' : ''}>`);
   }
   if (id === resolve(themeRoot, "routes/search.astro")) {
     return readSource(id).replace("showImages: false,", `showImages: false, translations: ${JSON.stringify(searchUI)},`);

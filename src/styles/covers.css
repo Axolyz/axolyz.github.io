@@ -26,11 +26,11 @@ body:has(.cover-hero) > header :is(.nav-link, .icon-btn) { color: rgb(255 253 24
 body:has(.cover-hero) > header :is(.nav-link, .icon-btn):hover { color: #fffdf9; }
 body:has(.cover-hero) > header .site-title:hover { color: inherit; }
 /* A small brand crescent beside the lower-right corner of the wordmark. */
-body > header .site-title {
+body > header[data-brand-moon] .site-title {
   position: relative;
   padding-inline-end: 0.36em;
 }
-body > header .site-title::after {
+body > header[data-brand-moon] .site-title::after {
   content: "";
   position: absolute;
   inline-size: 0.45em;
@@ -43,6 +43,12 @@ body > header .site-title::after {
   pointer-events: none;
 }
 body:has(.cover-hero) > header .icon-btn:hover { background: transparent; }
+:root[data-theme="light"] body > header #theme-btn {
+  color: var(--accent);
+}
+:root[data-theme="light"] body > header #theme-btn:hover {
+  color: var(--accent);
+}
 body:has(.cover-hero) > header .mobile-menu ul { color: var(--fg); }
 body:has(.cover-hero) > header .mobile-menu a { color: var(--fg); }
 body:has(.cover-hero) > header .mobile-menu a:hover { background: var(--bg-subtle); }

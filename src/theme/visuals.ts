@@ -6,3 +6,5 @@ export const homeCover = {
   height: 3000,
   position: "50% 35%",
 };
+/** Decorative moon beside the site name; independent of the theme toggle. */
+export const showBrandMoon = false;
